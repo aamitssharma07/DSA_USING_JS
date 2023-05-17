@@ -125,5 +125,7 @@ linkedList.addNodePosition(13, 22);
 linkedList.addNodeEnd(18);
 linkedList.addNodeEnd(134);
 linkedList.addNodeEnd(155);
-linkedList.deleteNodePosition(155);
+linkedList.deleteNodePosition(18);
+linkedList.deleteNodeStart();
+linkedList.deleteNodeEnd();
 linkedList.traverse();
