@@ -5,9 +5,10 @@ class Node {
   }
 }
 
-class LinkedList {
+class SingleLinkedList {
   constructor() {
     this.head = null;
+    this.tempHead = null;
   }
   // ******************************************
   // INSERT THE NODE AT START
@@ -58,7 +59,7 @@ class LinkedList {
   };
 
   // ******************************************
-  // TRAVERSE THE linkedList
+  // ITERATIVE TRAVERSE
   // ******************************************
 
   traverse = function () {
@@ -70,6 +71,17 @@ class LinkedList {
         t = t.link;
       }
   };
+
+  // ******************************************
+  // RECURSIVE TRAVERSE
+  // ******************************************
+  recursiveTraverse = function (head) {
+    if (head) {
+      console.log(head.value);
+      this.recursiveTraverse(head.link);
+    }
+  };
+
   // ******************************************
   // DELETE NODE AT START
   // ******************************************
@@ -117,9 +129,93 @@ class LinkedList {
       }
     }
   };
+
+  // ******************************************
+  // ITERATIVE REVERSING LINKED LIST
+  // ******************************************
+
+  iterativeReverse = function () {
+    if (!this.head) console.log("Linked list is empty, can't reverse");
+    else if (!this.head.link)
+      console.log("Linked List has one node, no need to reverse");
+    else {
+      let current = this.head;
+      let prev = null;
+      let next = current.link;
+      while (current) {
+        next = current.link;
+        current.link = prev;
+        prev = current;
+        current = next;
+      }
+
+      this.head = prev;
+    }
+  };
+
+  // ******************************************
+  // RECURSIVE REVERSING LINKED LIST
+  // ******************************************
+
+  recursiveReverse(Head) {
+    if (!this.head) console.log("Linked List is empty");
+    else if (!this.head.link)
+      console.log("Linked list has only one node, no need to reverse it");
+    else {
+      if (Head.link) {
+        this.recursiveReverse(Head.link);
+        Head.link.link = Head;
+        if (Head === this.head) {
+          Head.link = null;
+          this.head = this.tempHead;
+        }
+      } else {
+        this.tempHead = Head;
+      }
+    }
+  }
 }
 
-const linkedList = new LinkedList();
+class CircularLinkedList {
+  constructor() {
+    this.head = null;
+  }
+
+  // ***************************************
+  // INSERT Node
+  // **************************************
+
+  addNode = function (value) {
+    let node = new Node(value);
+    if (!this.head) {
+      this.head = node;
+      this.head.link = this.head;
+    } else {
+      let temp = this.head;
+      while (this.head !== temp.link) temp = temp.link;
+      temp.link = node;
+      node.link = this.head;
+    }
+  };
+
+  // *************************************
+  // TRAVERSE Node
+  // **************************************
+
+  traverse() {
+    if (!this.head) console.log("Empty Linked ListS");
+    else {
+      let temp = this.head.link;
+      console.log(this.head.value);
+      while (temp !== this.head) {
+        console.log(temp.value);
+        temp = temp.link;
+      }
+    }
+  }
+}
+
+const linkedList = new SingleLinkedList();
 linkedList.addNodeStart(22);
 linkedList.addNodePosition(13, 22);
 linkedList.addNodeEnd(18);
@@ -128,4 +224,12 @@ linkedList.addNodeEnd(155);
 linkedList.deleteNodePosition(18);
 linkedList.deleteNodeStart();
 linkedList.deleteNodeEnd();
+linkedList.iterativeReverse();
+linkedList.recursiveReverse(SingleLinkedList.head);
 linkedList.traverse();
+
+const circlularLinkedList = new CircularLinkedList();
+circlularLinkedList.addNode(15);
+circlularLinkedList.addNode(20);
+circlularLinkedList.addNode(30);
+circlularLinkedList.traverse();
