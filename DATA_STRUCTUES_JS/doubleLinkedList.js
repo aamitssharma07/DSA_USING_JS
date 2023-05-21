@@ -9,6 +9,7 @@ class Node {
 class DoubleLinkedList {
   constructor() {
     this.head = null;
+    this.tail = null;
   }
 
   // *************************************
@@ -17,8 +18,10 @@ class DoubleLinkedList {
 
   addNodeStart(value) {
     const node = new Node(value);
-    if (!this.head) this.head = node;
-    else node.next = this.head;
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+    } else node.next = this.head;
     this.head.prev = node;
     this.head = node;
   }
@@ -31,10 +34,13 @@ class DoubleLinkedList {
     const node = new Node(value);
     if (!this.head) this.head = node;
     else {
-      let temp = this.head;
-      while (temp.next) temp = temp.next;
-      temp.next = node;
-      node.prev = temp;
+      // let temp = this.head;
+      // while (temp.next) temp = temp.next;
+      // temp.next = node;
+      // node.prev = temp;
+      this.tail.next = node;
+      node.prev = tail;
+      this.tail = node;
     }
   }
 
@@ -52,6 +58,7 @@ class DoubleLinkedList {
       if (this.head.value == position) {
         this.head.next = node;
         node.prev = this.head;
+        this.tail = node;
       } else
         console.log(
           `Not able to find the node withh value ${position}, so can't add node`
@@ -59,8 +66,8 @@ class DoubleLinkedList {
     else {
       let temp = this.head;
       while (temp.value != position && temp.next) temp = temp.next;
-
-      if (!temp.next)
+      if (temp.value === position && !temp.next) this.addNodeEnd();
+      else if (!temp.next)
         console.log(
           `Not able to find the node withh value ${position}, so can't add node`
         );
